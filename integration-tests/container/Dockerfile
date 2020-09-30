@@ -7,11 +7,17 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_BIN=/usr/lib/postgresql/12/bin/postgres
 ENV INITDB_BIN=/usr/lib/postgresql/12/bin/initdb
-RUN PATH=$PATH:$HOME/.cargo/bin cargo install diesel_cli --force
+ARG SPEEDTEST_THROUGHPUT
+ARG SPEEDTEST_DURATION
+ARG VERBOSE
 ARG NODES
+ENV SPEEDTEST_THROUGHPUT=$SPEEDTEST_THROUGHPUT
+ENV SPEEDTEST_DURATION=$SPEEDTEST_DURATION
+ENV VERBOSE=$VERBOSE
+RUN PATH=$PATH:$HOME/.cargo/bin cargo install diesel_cli --force
 ENV NODES=$NODES
 # we pull in the git tar instead of the local folder becuase the raw code is much much smaller
 # note that changes have to be checked in to be pulled in and tested! we pull this in near
 # the bottom to maximize caching of earlier containers
 ADD rita.tar.gz /
-CMD PATH=$PATH:$HOME/.cargo/bin SPEEDTEST_THROUGHPUT="200" SPEEDTEST_DURATION="15" INITIAL_POLL_INTERVAL=5 BACKOFF_FACTOR="1.5" VERBOSE=1 /althea_rs/integration-tests/rita.sh
+CMD PATH=$PATH:$HOME/.cargo/bin INITIAL_POLL_INTERVAL=5 BACKOFF_FACTOR="1.5" /althea_rs/integration-tests/rita.sh

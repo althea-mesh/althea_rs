@@ -10,16 +10,12 @@ if ! modprobe wireguard ; then
 	exit 1
 fi
 
-# cleanup docker junk or this script will quickly run you out of room in /
-echo "Docker images take up a lot of space in root if you are running out of space select Yes"
-docker system prune -a -f
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOCKERFOLDER=$DIR/../integration-tests/container/
 REPOFOLDER=$DIR/..
 git archive --format=tar.gz -o $DOCKERFOLDER/rita.tar.gz --prefix=althea_rs/ HEAD
 pushd $DOCKERFOLDER
-time docker build -t rita-test --build-arg NODES=$NODES --build-arg SPEEDTEST_THROUGHPUT="200" --build-arg SPEEDTEST_DURATION="15" --build-arg INITIAL_POLL_INTERVAL=5 --build-arg BACKOFF_FACTOR="1.5" --build-arg VERBOSE=1 .
-time docker run --privileged -it rita-test
+time docker build -t rita-test --build-arg NODES=$NODES --build-arg SPEEDTEST_THROUGHPUT="20" --build-arg SPEEDTEST_DURATION="15" --build-arg REVISION_B=master --build-arg REMOTE_A=.. --build-arg REMOTE_B="https://github.com/althea-mesh/althea_rs.git" --build-arg COMPAT_LAYOUT="inner_ring_old" --build-arg INITIAL_POLL_INTERVAL=5 --build-arg BACKOFF_FACTOR="1.5" --build-arg VERBOSE=1 .
+time docker run --privileged -t rita-test
 rm rita.tar.gz
 popd

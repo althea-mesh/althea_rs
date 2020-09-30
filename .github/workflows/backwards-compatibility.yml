@@ -1,0 +1,18 @@
+name: Backwards compatibility test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Wireguard
+        run: sudo apt-get update && sudo apt install -y wireguard linux-source linux-headers-$(uname -r) build-essential && sudo modprobe wireguard
+      - name: Run integration test
+        run: bash scripts/test-ci.sh
