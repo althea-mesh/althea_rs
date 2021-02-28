@@ -3,7 +3,7 @@ use super::{KernelInterface, KernelInterfaceError};
 use failure::Error;
 
 impl dyn KernelInterface {
-    pub fn delete_tunnel(&self, interface: &String) -> Result<(), Error> {
+    pub fn delete_tunnel(&self, interface: &str) -> Result<(), Error> {
         let output = self.run_command("ip", &["link", "del", &interface])?;
         if !output.stderr.is_empty() {
             return Err(KernelInterfaceError::RuntimeError(format!(

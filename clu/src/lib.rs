@@ -32,7 +32,8 @@ pub enum CluError {
 }
 
 pub fn generate_mesh_ip() -> Result<IpAddr, Error> {
-    let seed: String = thread_rng().sample_iter(&Alphanumeric).take(50).collect();
+    let seed: String =
+        String::from_utf8(thread_rng().sample_iter(&Alphanumeric).take(50).collect()).unwrap();
     let mesh_ip = match ipgen::ip(&seed, "fd00::/8") {
         Ok(ip) => ip,
         Err(msg) => bail!(msg), // For some reason, ipgen devs decided to use Strings for all errors

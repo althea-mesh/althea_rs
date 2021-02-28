@@ -161,7 +161,7 @@ lazy_static! {
 #[cfg(test)]
 lazy_static! {
     pub static ref SETTING: Arc<RwLock<RitaSettingsStruct>> =
-        { Arc::new(RwLock::new(RitaSettingsStruct::default())) };
+        Arc::new(RwLock::new(RitaSettingsStruct::default()));
 }
 
 fn env_vars_contains(var_name: &str) -> bool {

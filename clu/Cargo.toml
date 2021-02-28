@@ -11,10 +11,10 @@ althea_kernel_interface = { path = "../althea_kernel_interface" }
 althea_types = { path = "../althea_types" }
 lazy_static = "1.4"
 log = "0.4"
-env_logger = "0.7"
+env_logger = "0.8"
 failure = "0.1"
 ipgen = "0.0.4"
-rand = "0.7"
+rand = "0.8"
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"

@@ -211,7 +211,7 @@ lazy_static! {
 #[cfg(test)]
 lazy_static! {
     pub static ref SETTING: Arc<RwLock<RitaExitSettingsStruct>> =
-        { Arc::new(RwLock::new(RitaExitSettingsStruct::test_default())) };
+        Arc::new(RwLock::new(RitaExitSettingsStruct::test_default()));
 }
 
 /// used to crash the exit on first startup if config does not make sense

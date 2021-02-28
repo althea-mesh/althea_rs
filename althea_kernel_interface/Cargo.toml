@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 oping = "0.3"
 failure = "0.1"
-itertools = "0.8"
+itertools = "0.10"
 lazy_static = "1.4"
 log = "0.4"
 althea_types = { path = "../althea_types" }
